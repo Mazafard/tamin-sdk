@@ -61,7 +61,7 @@ All the examples below recognizes two environment variables:
 
 **Prescription**
 
--  `Create a Prescription <examples/create_prescription.py.py>`__
+-  `Create a Prescription <examples/create_prescription.py>`__
 
 License
 ~~~~~~~
