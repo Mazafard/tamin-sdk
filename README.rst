@@ -3,7 +3,7 @@ Python library for Tamin.ir API
 
 .. image:: https://badge.fury.io/py/taminsdk.svg
     :target: https://badge.fury.io/py/taminsdk
-.. image:: https://travis-ci.org/mazafard/tamin-sdk.svg?branch=master
+.. image:: https://app.travis-ci.com/Mazafard/tamin-sdk.svg?branch=master
     :target: https://travis-ci.org/mazafard/tamin-sdk
 
 
@@ -67,7 +67,3 @@ License
 ~~~~~~~
 
 GNU LGPLv3. Please see `LICENSE <LICENSE>`__.
-
-Please note that 0.1.3 release changed the LICENSE from BSD to GNU
-LGPLv3. If you were using the library prior to this release, please file
-a issue to let us know if the change affects you in any way.
