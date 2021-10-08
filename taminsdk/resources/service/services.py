@@ -1,20 +1,23 @@
 """
 This module contains functions for prescription operations
 """
+import datetime
+import logging
 
 from taminsdk.resources.service import (
-    make_get_request,
+    make_get_request, handle_response,
 )
 from taminsdk.resources.service.exceptions import (
     ServiceException,
 )
-
 from taminsdk.resources.service.types import Service
 
 try:
     from urlparse import urljoin
 except ImportError:
     from urllib.parse import urljoin
+
+log = logging.getLogger(__name__)
 
 
 def get_all_services(
@@ -26,21 +29,16 @@ def get_all_services(
     """
 
     # get /api/ws-services
+    start_time = datetime.datetime.now()
     response = make_get_request(
         session=session,
         endpoint='ws-services',
         params_data=params_data
     )
-    json_data = response.json()
-    if response.status_code == 200:
-        services_data = json_data['data']
-        return Service(services_data)
-    else:
-        raise ServiceException(
-            message=json_data['data'],
-            error_code=json_data['error_code'],
-
-        )
+    duration = datetime.datetime.now() - start_time
+    log.info('Response[%d]: %s, Duration: %s.%ss.' % (
+        response.status_code, response.reason, duration.seconds, duration.microseconds))
+    return handle_response(response, response.content.decode('utf-8'))
 
 
 def get_prescription_type(
@@ -52,21 +50,17 @@ def get_prescription_type(
     """
 
     # get /api/get_prescription_type
+    start_time = datetime.datetime.now()
     response = make_get_request(
         session=session,
         endpoint='ws-prescription-type',
         params_data=params_data
     )
-    json_data = response.json()
-    if response.status_code == 200:
-        services_data = json_data['data']
-        return Service(services_data)
-    else:
-        raise ServiceException(
-            message=json_data['data'],
-            error_code=json_data['error_code'],
+    duration = datetime.datetime.now() - start_time
+    log.info('Response[%d]: %s, Duration: %s.%ss.' % (
+        response.status_code, response.reason, duration.seconds, duration.microseconds))
+    return handle_response(response, response.content.decode('utf-8'))
 
-        )
 
 def get_paraclinic_taref(
         session,
@@ -77,21 +71,16 @@ def get_paraclinic_taref(
     """
 
     # get /api/ws-par-taref
+    start_time = datetime.datetime.now()
     response = make_get_request(
         session=session,
         endpoint='ws-par-taref',
         params_data=params_data
     )
-    json_data = response.json()
-    if response.status_code == 200:
-        services_data = json_data['data']
-        return Service(services_data)
-    else:
-        raise ServiceException(
-            message=json_data['data'],
-            error_code=json_data['error_code'],
-
-        )
+    duration = datetime.datetime.now() - start_time
+    log.info('Response[%d]: %s, Duration: %s.%ss.' % (
+        response.status_code, response.reason, duration.seconds, duration.microseconds))
+    return handle_response(response, response.content.decode('utf-8'))
 
 
 def get_drug_amount(
@@ -103,21 +92,16 @@ def get_drug_amount(
     """
 
     # get /api/get_drug_amount
+    start_time = datetime.datetime.now()
     response = make_get_request(
         session=session,
         endpoint='ws-drug-amount',
         params_data=params_data
     )
-    json_data = response.json()
-    if response.status_code == 200:
-        services_data = json_data['data']
-        return Service(services_data)
-    else:
-        raise ServiceException(
-            message=json_data['data'],
-            error_code=json_data['error_code'],
-
-        )
+    duration = datetime.datetime.now() - start_time
+    log.info('Response[%d]: %s, Duration: %s.%ss.' % (
+        response.status_code, response.reason, duration.seconds, duration.microseconds))
+    return handle_response(response, response.content.decode('utf-8'))
 
 
 def get_drug_instruction(
@@ -129,19 +113,13 @@ def get_drug_instruction(
     """
 
     # get /api/ws-drug-instruction
+    start_time = datetime.datetime.now()
     response = make_get_request(
         session=session,
         endpoint='ws-drug-instruction',
         params_data=params_data
     )
-    json_data = response.json()
-    if response.status_code == 200:
-        services_data = json_data['data']
-        return Service(services_data)
-    else:
-        raise ServiceException(
-            message=json_data['data'],
-            error_code=json_data['error_code'],
-
-        )
-
+    duration = datetime.datetime.now() - start_time
+    log.info('Response[%d]: %s, Duration: %s.%ss.' % (
+        response.status_code, response.reason, duration.seconds, duration.microseconds))
+    return handle_response(response, response.content.decode('utf-8'))

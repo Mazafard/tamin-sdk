@@ -2,20 +2,20 @@
 This module contains functions for prescription operations
 """
 import datetime
+import logging
 
 from taminsdk.resources.prescription import (
-    make_get_request, make_post_request, make_put_request,
-)
-from taminsdk.resources.prescription.exceptions import (
-    PrescriptionNotCreatedException,
-)
-from taminsdk.resources.prescription.types import (Prescription, DocEprsc
-)
+    make_get_request, make_post_request, )
+from taminsdk.resources.prescription.types import (DocEprsc
+                                                   )
+from taminsdk.resources.service import handle_response
 
 try:
     from urlparse import urljoin
 except ImportError:
     from urllib.parse import urljoin
+
+log = logging.getLogger(__name__)
 
 
 def create_prescription(
@@ -50,17 +50,12 @@ def create_prescription(
     }
 
     # POST /interface/epresc/SendEpresc
+    start_time = datetime.datetime.now()
     response = make_post_request(session, '', json_data=prescription_data)
-    json_data = response.json()
-    if response.status_code == 200:
-        prescription_data = json_data['data']
-        return Prescription(prescription_data)
-    else:
-        raise PrescriptionNotCreatedException(
-            message=json_data['message'],
-            error_code=json_data['error_code'],
-        )
-
+    duration = datetime.datetime.now() - start_time
+    log.info('Response[%d]: %s, Duration: %s.%ss.' % (
+        response.status_code, response.reason, duration.seconds, duration.microseconds))
+    return handle_response(response, response.content.decode('utf-8'))
 
 
 def get_prescription_detail(
@@ -72,18 +67,14 @@ def get_prescription_detail(
     """
 
     # get /api/ws-services
+    start_time = datetime.datetime.now()
+
     response = make_get_request(
         session=session,
         endpoint='',
         params_data=params_data
     )
-    json_data = response.json()
-    if response.status_code == 200:
-        prescription_data = json_data['data']
-        return Prescription(prescription_data)
-    else:
-        raise PrescriptionNotCreatedException(
-            message=json_data['data'],
-            error_code=json_data['error_code'],
-
-        )
+    duration = datetime.datetime.now() - start_time
+    log.info('Response[%d]: %s, Duration: %s.%ss.' % (
+        response.status_code, response.reason, duration.seconds, duration.microseconds))
+    return handle_response(response, response.content.decode('utf-8'))

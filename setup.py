@@ -20,7 +20,7 @@ setuptools.setup(
     author='Mazafard',
     url='https://github.com/mazafard/tamin-sdk',
     author_email='mazafard@gmail.com',
-    version='0.2.0',
+    version='0.3.0',
     description='Unoffical Tamin SDK',
     long_description=long_description,
     classifiers=[
