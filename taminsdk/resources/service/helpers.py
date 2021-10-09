@@ -36,7 +36,8 @@ def handle_response(response, content):
     if status in (301, 302, 303, 307):
         raise exceptions.Redirection(response, content)
     elif 200 <= status <= 299:
-        return json.loads(content) if content else {}
+
+        return json.loads(content)['data']['list'] if content else {}
     elif status == 400:
         raise exceptions.BadRequest(response, content)
     elif status == 401:
